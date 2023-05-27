@@ -1,0 +1,51 @@
+### Pobierz wszystkie oceny ###
+GET http://localhost:8080/api/evaluations
+
+### Pobierz ocenę o określonym identyfikatorze ###
+GET http://localhost:8080/api/evaluations/1
+
+### Utwórz nową ocenę ###
+POST http://localhost:8080/api/evaluations
+Content-Type: application/json
+
+{
+  "joy": 0.8,
+  "sadness": 0.2,
+  "fear": 0.4,
+  "anger": 0.6,
+  "surprise": 0.3,
+  "neutrality": 0.5,
+  "satisfaction": 0.7,
+  "trust": 0.9,
+  "envy": 0.1,
+  "disgust": 0.2,
+  "excitement": 0.8,
+  "positiveSentiment": 0.75,
+  "negativeSentiment": 0.25
+}
+
+### Aktualizuj ocenę o określonym identyfikatorze ###
+PUT http://localhost:8080/api/evaluations/1
+Content-Type: application/json
+
+{
+  "joy": 0.9,
+  "sadness": 0.1,
+  "fear": 0.3,
+  "anger": 0.5,
+  "surprise": 0.2,
+  "neutrality": 0.4,
+  "satisfaction": 0.6,
+  "trust": 0.8,
+  "envy": 0.2,
+  "disgust": 0.1,
+  "excitement": 0.9,
+  "positiveSentiment": 0.8,
+  "negativeSentiment": 0.2,
+  "postId": 1
+}
+
+### Usuń ocenę o określonym identyfikatorze ###
+DELETE http://localhost:8080/api/evaluations/1
+
+

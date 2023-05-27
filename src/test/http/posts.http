@@ -1,0 +1,27 @@
+### Get all posts
+GET http://localhost:8080/api/posts
+### Get post by id
+GET http://localhost:8080/api/posts/1
+### Create post
+POST http://localhost:8080/api/posts
+Content-Type: application/json
+
+{
+  "content": "Przykładowa treść",
+  "authorId": 1,
+  "dairyId": 1
+}
+
+
+### Update post
+PUT http://localhost:8080/api/posts/1
+Content-Type: application/json
+
+{
+  "content": "Updated treść",
+  "authorId": 1,
+  "dairyId": 1
+}
+
+### Delete post
+DELETE http://localhost:8080/api/posts/1

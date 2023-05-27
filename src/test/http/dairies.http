@@ -1,0 +1,32 @@
+### GET all dairies
+
+GET http://localhost:8080/api/dairies
+
+### GET dairy by ID
+
+GET http://localhost:8080/api/dairies/1
+
+### CREATE new dairy
+
+POST http://localhost:8080/api/dairies
+Content-Type: application/json
+
+{
+  "name": "My Dairy",
+  "ownerId": 1
+}
+
+### UPDATE existing dairy
+
+PUT http://localhost:8080/api/dairies/1
+Content-Type: application/json
+
+{
+  "name": "Updated Dairy",
+  "ownerId": 2
+}
+
+### DELETE dairy by ID
+
+DELETE http://localhost:8080/api/dairies/1
+
