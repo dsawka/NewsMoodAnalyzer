@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.coderslab.newsmoodanalyzer.exception.ResourceNotFoundException;
 import pl.coderslab.newsmoodanalyzer.model.Post;
+import pl.coderslab.newsmoodanalyzer.openai.ChatGPTHelper;
 import pl.coderslab.newsmoodanalyzer.repository.PostRepository;
 
 import java.util.List;
@@ -16,10 +17,13 @@ import java.util.List;
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
+    private final EvaluationService evaluationService;
+    private final ChatGPTHelper chatGPTHelper;
 
     @Override
     public List<Post> getAllPosts() {
         return postRepository.findAll();
+
     }
 
     @Override
@@ -42,4 +46,10 @@ public class PostServiceImpl implements PostService {
     public void deletePost(Long id) {
         postRepository.deleteById(id);
     }
+
+    @Override
+    public void analyzePostContent(Post post) {
+        chatGPTHelper.analyzePostContent(post);
+    }
 }
+

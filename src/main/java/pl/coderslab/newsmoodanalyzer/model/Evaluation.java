@@ -17,32 +17,33 @@ public class Evaluation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToOne
+    @JoinColumn(name = "post_id")
     private Post post;
 
-    private int joy;
+    private double joy;
 
-    private int sadness;
+    private double sadness;
 
-    private int fear;
+    private double fear;
 
-    private int anger;
+    private double anger;
 
-    private int surprise;
+    private double surprise;
 
-    private int neutrality;
+    private double neutrality;
 
-    private int satisfaction;
+    private double satisfaction;
 
-    private int trust;
+    private double trust;
 
-    private int envy;
+    private double envy;
 
-    private int disgust;
+    private double disgust;
 
-    private int excitement;
+    private double excitement;
 
-    private int positiveSentiment;
+    private double positiveSentiment;
 
-    private int negativeSentiment;
+    private double negativeSentiment;
 }

@@ -10,10 +10,13 @@ import pl.coderslab.newsmoodanalyzer.dto.EvaluationDTO;
 import pl.coderslab.newsmoodanalyzer.dto.PostDTO;
 import pl.coderslab.newsmoodanalyzer.model.Evaluation;
 import pl.coderslab.newsmoodanalyzer.model.Post;
+import pl.coderslab.newsmoodanalyzer.openai.ChatGPTHelper;
 import pl.coderslab.newsmoodanalyzer.service.AuthorService;
 import pl.coderslab.newsmoodanalyzer.service.DairyService;
+import pl.coderslab.newsmoodanalyzer.service.EvaluationService;
 import pl.coderslab.newsmoodanalyzer.service.PostService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +32,10 @@ public class PostController {
     private final AuthorService authorService;
     @Autowired
     private final DairyService dairyService;
+    @Autowired
+    private final EvaluationService evaluationService;
+    @Autowired
+    private final ChatGPTHelper chatGPTHelper;
 
     @GetMapping
     public ResponseEntity<List<PostDTO>> getAllPosts() {
@@ -50,9 +57,11 @@ public class PostController {
     public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO) {
         Post post = mapDtoToPost(postDTO);
         Post createdPost = postService.createPost(post);
+        chatGPTHelper.analyzePostContent(createdPost); // Dodaj to wywołanie
         PostDTO createdPostDTO = mapPostToDto(createdPost);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPostDTO);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<PostDTO> updatePost(@PathVariable("id") Long id, @RequestBody PostDTO postDTO) {
@@ -76,16 +85,21 @@ public class PostController {
         postDTO.setAuthorId(post.getAuthor().getId());
         postDTO.setContent(post.getContent());
         postDTO.setCreationDate(post.getCreationDate());
-        postDTO.setEvaluations(post.getEvaluations().stream()
-                .map(this::mapEvaluationToDto)
-                .collect(Collectors.toList()));
+
+        if (post.getEvaluation() != null) {
+            EvaluationDTO evaluationDTO = mapEvaluationToDto(post.getEvaluation());
+            postDTO.setEvaluations(Collections.singletonList(evaluationDTO));
+        }
+
         postDTO.setDairyId(post.getDairy().getId());
         return postDTO;
     }
 
+
     private EvaluationDTO mapEvaluationToDto(Evaluation evaluation) {
         EvaluationDTO evaluationDTO = new EvaluationDTO();
         evaluationDTO.setId(evaluation.getId());
+        evaluation.setPost(postService.getPostById(evaluation.getPost().getId()));
         evaluationDTO.setJoy(evaluation.getJoy());
         evaluationDTO.setSadness(evaluation.getSadness());
         evaluationDTO.setFear(evaluation.getFear());
@@ -109,13 +123,14 @@ public class PostController {
         post.setAuthor(authorService.getAuthorById(postDTO.getAuthorId()));
         post.setContent(postDTO.getContent());
         post.setCreationDate(postDTO.getCreationDate());
-        List<Evaluation> evaluations = postDTO.getEvaluations().stream()
-                .map(this::mapDtoToEvaluation)
-                .collect(Collectors.toList());
-        post.setEvaluations(evaluations);
+        if (postDTO.getEvaluations() != null && !postDTO.getEvaluations().isEmpty()) {
+            Evaluation evaluation = mapDtoToEvaluation(postDTO.getEvaluations().get(0));
+            post.setEvaluation(evaluationService.createEvaluation(evaluation));
+        }
         post.setDairy(dairyService.getDairyById(postDTO.getDairyId()));
         return post;
     }
+
 
     private Evaluation mapDtoToEvaluation(EvaluationDTO evaluationDTO) {
         Evaluation evaluation = new Evaluation();

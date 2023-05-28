@@ -2,6 +2,7 @@ package pl.coderslab.newsmoodanalyzer.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import pl.coderslab.newsmoodanalyzer.controller.PostController;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,11 +30,20 @@ public class Post {
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
-    @OneToMany(mappedBy = "post")
-    private List<Evaluation> evaluations;
+    @OneToOne(mappedBy = "post")
+    private Evaluation evaluation;
 
     @ManyToOne(optional = false)
     private Dairy dairy;
+
+
+    public Evaluation getEvaluation() {
+        return evaluation;
+    }
+
+    public void setEvaluation(Evaluation evaluation) {
+        this.evaluation = evaluation;
+    }
 
     @PrePersist
     public void prePersist() {

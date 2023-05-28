@@ -12,7 +12,7 @@ POST http://localhost:8080/api/dairies
 Content-Type: application/json
 
 {
-  "name": "My Dairy",
+  "name": "My Dairy2",
   "ownerId": 1
 }
 
@@ -23,7 +23,7 @@ Content-Type: application/json
 
 {
   "name": "Updated Dairy",
-  "ownerId": 2
+  "ownerId": 1
 }
 
 ### DELETE dairy by ID

@@ -1,5 +1,6 @@
 package pl.coderslab.newsmoodanalyzer.service;
 
+import pl.coderslab.newsmoodanalyzer.dto.EvaluationDTO;
 import pl.coderslab.newsmoodanalyzer.model.Evaluation;
 
 import java.util.List;
