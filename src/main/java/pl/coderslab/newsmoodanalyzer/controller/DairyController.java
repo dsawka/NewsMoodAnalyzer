@@ -81,7 +81,6 @@ public class DairyController {
         Dairy dairy = new Dairy();
         dairy.setId(dto.getId());
         dairy.setName(dto.getName());
-        // Pobieram i ustawiam właściciela Dairy
         Author owner = authorService.getAuthorById(dto.getOwnerId());
         dairy.setOwner(owner);
         return dairy;

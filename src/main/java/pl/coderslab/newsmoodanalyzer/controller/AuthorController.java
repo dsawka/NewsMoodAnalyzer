@@ -60,8 +60,6 @@ public class AuthorController {
     }
 
     private AuthorDTO convertToDTO(Author author) {
-        // mapowanie pól z obiektu Author na AuthorDTO
-        // przykład implementacji:
         AuthorDTO authorDTO = new AuthorDTO();
         authorDTO.setId(author.getId());
         authorDTO.setName(author.getName());
@@ -69,8 +67,6 @@ public class AuthorController {
     }
 
     private Author convertToEntity(AuthorDTO authorDTO) {
-        // mapowanie pól z obiektu AuthorDTO na Author
-        // przykład implementacji:
         Author author = new Author();
         author.setId(authorDTO.getId());
         author.setName(authorDTO.getName());
@@ -78,8 +74,6 @@ public class AuthorController {
     }
 
     private Author updateAuthorFromDTO(Author author, AuthorDTO authorDTO) {
-        // aktualizacja pól autora na podstawie danych z AuthorDTO
-        // przykład implementacji:
         author.setName(authorDTO.getName());
         return author;
     }

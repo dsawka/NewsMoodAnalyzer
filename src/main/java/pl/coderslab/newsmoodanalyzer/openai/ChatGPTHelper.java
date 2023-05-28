@@ -13,10 +13,7 @@ import pl.coderslab.newsmoodanalyzer.model.Evaluation;
 import pl.coderslab.newsmoodanalyzer.model.Post;
 import pl.coderslab.newsmoodanalyzer.service.EvaluationService;
 
-import java.time.Duration;
 import java.util.List;
-
-import static pl.coderslab.newsmoodanalyzer.openai.OpenAiApiKey.API_KEY;
 
 @Service
 public class ChatGPTHelper {
@@ -27,9 +24,8 @@ public class ChatGPTHelper {
     private OpenAiService openAiService;
     private final String model = "gpt-3.5-turbo";
 
-    public ChatGPTHelper() {
-
-        openAiService = new OpenAiService(API_KEY, Duration.ofSeconds(30));
+    public ChatGPTHelper(OpenAiService openAiService) {
+        this.openAiService = openAiService;
     }
 
     public void analyzePostContent(Post post) {

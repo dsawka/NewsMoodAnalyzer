@@ -1,4 +1,4 @@
-package pl.coderslab.newsmoodanalyzer;
+package pl.coderslab.newsmoodanalyzer.openai;
 
 import com.theokanning.openai.service.OpenAiService;
 import io.swagger.v3.oas.models.Components;
@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.Duration;
+import static pl.coderslab.newsmoodanalyzer.openai.OpenAiApiKey.API_KEY;
 
 @Configuration
 public class OpenApiConfig {
@@ -23,9 +24,8 @@ public class OpenApiConfig {
 
     @Bean
     public OpenAiService openAiService() {
-        String apiKey = "YOUR_API_KEY";
         Duration timeout = Duration.ofSeconds(30);
-        return new OpenAiService(apiKey, timeout);
+        return new OpenAiService(API_KEY, timeout);
     }
 
 }
